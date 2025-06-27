@@ -3,7 +3,7 @@
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Linkedin, Facebook, Share2, Mail, Send, X } from "lucide-react";
+import { Linkedin, Facebook, Share2, Mail, Send } from "lucide-react";
 import { isWebShareApiSupported, shareViaWebShareApi, copyToClipboard, generateShareUrl, openShareWindow } from "@/lib/share-utils";
 
 interface ShareModalProps {
@@ -68,7 +68,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareDa
             className="flex items-center justify-center gap-2 border-2 border-innrspark-yellow bg-white text-innrspark-charcoal hover:bg-innrspark-yellow hover:scale-105 transition-all p-4 rounded-xl shadow-sm"
             onClick={() => openShareWindow(generateShareUrl('twitter', defaultShareData))}
           >
-            <X className="w-5 h-5" /> X
+            <img src="/icons8-x-50.png" alt="X icon" className="w-5 h-5" /> X
           </Button>
           <Button
             variant="outline"

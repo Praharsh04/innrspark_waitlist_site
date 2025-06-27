@@ -65,25 +65,6 @@ export const HeroSection = () => {
 
         {showForm && <WaitlistForm onClose={() => setShowForm(false)} />}
       </div>
-
-      {/* Simplified ad strip */}
-      <div className="w-full bg-gray-50 py-6 md:py-8 mt-10">
-        <div className="container max-w-6xl">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-lg md:text-xl font-medium text-innrspark-charcoal mb-4 md:mb-0">
-              Life's too short for the wrong path.
-              <span className="font-semibold text-innrspark-yellow"> Discover your spark.</span>
-            </p>
-            <Button 
-              onClick={() => setShowForm(true)}
-              variant="outline"
-              className="border-innrspark-yellow text-innrspark-charcoal hover:bg-innrspark-yellow hover:scale-105 hover:shadow-[0_0_15px_rgba(255,214,0,0.5)] transition-all px-6 py-2 text-sm rounded-full"
-            >
-              Join Waitlist
-            </Button>
-          </div>
-        </div>
-      </div>
     </section>
   );
 };

@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <footer className="bg-innrspark-charcoal text-white py-12">
       <div className="container max-w-6xl">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
             <div className="flex items-center mb-4">
               <img 
@@ -63,14 +63,7 @@ export const Footer = () => {
             </ul>
           </div>
           
-          <div className="md:col-span-1">
-            <h4 className="font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-innrspark-yellow transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-innrspark-yellow transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-innrspark-yellow transition-colors">Cookie Policy</a></li>
-            </ul>
-          </div>
+          
           
           <div className="md:col-span-1">
             <h4 className="font-semibold mb-4">Contact</h4>

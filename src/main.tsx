@@ -4,7 +4,7 @@ import './index.css'
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, logEvent } from "firebase/analytics"; // Import logEvent here
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,5 +20,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
+
+// Log a test event immediately after initialization
+logEvent(analytics, "test_event", { message: "Firebase Analytics initialized and test event fired." });
 
 createRoot(document.getElementById("root")!).render(<App />);

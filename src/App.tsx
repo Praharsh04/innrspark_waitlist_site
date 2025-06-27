@@ -57,6 +57,14 @@ const App = () => {
       ...utmParams,
     });
 
+    // Log campaign_tracking event if UTM parameters are present
+    if (Object.values(utmParams).some(param => param !== null)) {
+      logEvent(analytics, "campaign_tracking", {
+        ...utmParams,
+        page_path: window.location.pathname,
+      });
+    }
+
     // Log session_start if user stays longer than 10 seconds
     const sessionStartTimer = setTimeout(() => {
       logEvent(analytics, "session_start", {

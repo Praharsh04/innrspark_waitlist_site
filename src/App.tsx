@@ -5,42 +5,90 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import { analytics } from "./main"; // Import the analytics instance
-import { logEvent } from "firebase/analytics"; // Import logEvent
-import React from "react"; // Import React
+import { analytics } from "./main";
+import { logEvent, setUserId, setUserProperties } from "firebase/analytics";
+import React from "react";
 
 const queryClient = new QueryClient();
 
+// Helper to get device category
+const getDeviceCategory = () => {
+  const ua = navigator.userAgent;
+  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+    return "tablet";
+  }
+  if (/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(Jasmine|Opera Mini|Opera Mobi|Skyfire|Tear|WAP|Windows Phone|iemobile)|Fennec|BrowserNG|Nokia|Series60|Symbian|Windows CE|PlayStation|PSP|Nintendo|Xbox/i.test(ua)) {
+    return "mobile";
+  }
+  return "desktop";
+};
+
+// Helper to parse UTM parameters
+const getUtmParameters = () => {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    utm_source: params.get("utm_source"),
+    utm_medium: params.get("utm_medium"),
+    utm_campaign: params.get("utm_campaign"),
+    utm_term: params.get("utm_term"),
+    utm_content: params.get("utm_content"),
+  };
+};
+
 const App = () => {
   React.useEffect(() => {
-    // Global click listener for general click tracking
-    const handleGlobalClick = (event: MouseEvent) => {
-      const targetElement = event.target as HTMLElement;
-      logEvent(analytics, "global_click", {
-        element_tag: targetElement.tagName,
-        element_id: targetElement.id,
-        element_class: targetElement.className,
-        element_text: targetElement.innerText ? targetElement.innerText.substring(0, 100) : "", // Limit text length
+    // Set a unique user ID for anonymous tracking (can be replaced with actual user ID if logged in)
+    const userId = localStorage.getItem("firebase_user_id") || `anon_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    setUserId(analytics, userId);
+    localStorage.setItem("firebase_user_id", userId);
+
+    // Set user properties (device category)
+    setUserProperties(analytics, {
+      device_category: getDeviceCategory(),
+    });
+
+    // Log page_view event
+    const utmParams = getUtmParameters();
+    logEvent(analytics, "page_view", {
+      page_path: window.location.pathname,
+      page_location: window.location.href,
+      page_referrer: document.referrer,
+      device_category: getDeviceCategory(),
+      ...utmParams,
+    });
+
+    // Log session_start if user stays longer than 10 seconds
+    const sessionStartTimer = setTimeout(() => {
+      logEvent(analytics, "session_start", {
         page_path: window.location.pathname,
-        page_title: document.title,
+        device_category: getDeviceCategory(),
+        ...utmParams,
       });
+    }, 10000);
+
+    // Scroll depth tracking
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = window.scrollY;
+      const scrollPercent = (scrolled / scrollHeight) * 100;
+
+      if (scrollPercent >= 75) {
+        logEvent(analytics, "scroll_depth", {
+          scroll_percent: 75,
+          page_path: window.location.pathname,
+          device_category: getDeviceCategory(),
+        });
+        window.removeEventListener("scroll", handleScroll); // Log once
+      }
     };
 
-    document.body.addEventListener("click", handleGlobalClick);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      document.body.removeEventListener("click", handleGlobalClick);
+      clearTimeout(sessionStartTimer);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  // Example of a specific event logging for a button
-  const handleExampleButtonClick = () => {
-    logEvent(analytics, "example_button_click", {
-      button_name: "Example Button",
-      location: "App.tsx",
-    });
-    alert("Example button clicked! Check Firebase Analytics.");
-  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -55,24 +103,6 @@ const App = () => {
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
-      {/* Example button for specific event tracking demonstration */}
-      <button
-        onClick={handleExampleButtonClick}
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          padding: "10px 20px",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-          zIndex: 1000,
-        }}
-      >
-        Log Example Click
-      </button>
     </QueryClientProvider>
   );
 };

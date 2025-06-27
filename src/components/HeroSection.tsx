@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { WaitlistForm } from "./WaitlistForm";
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
+import { analytics } from "../main";
+import { logEvent } from "firebase/analytics";
 
 export const HeroSection = () => {
   const [showForm, setShowForm] = useState(false);
@@ -46,7 +48,13 @@ export const HeroSection = () => {
 
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
           <Button 
-            onClick={() => setShowForm(true)} 
+            onClick={() => {
+              setShowForm(true);
+              logEvent(analytics, "join_waitlist_click", {
+                cta_location: "hero_section",
+                button_text: "Join the Waitlist",
+              });
+            }} 
             className={`bg-innrspark-yellow hover:bg-opacity-90 hover:scale-105 hover:shadow-[0_0_15px_rgba(255,214,0,0.5)] transition-all text-innrspark-charcoal px-8 py-6 text-lg rounded-full shadow-lg ${
               isPulsing ? 'animate-pulse' : ''
             }`}
@@ -55,7 +63,13 @@ export const HeroSection = () => {
           </Button>
 
           <Button 
-            onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => {
+              document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+              logEvent(analytics, "how_it_works_click", {
+                cta_location: "hero_section",
+                button_text: "How It Works",
+              });
+            }}
             variant="outline" 
             className="border-innrspark-charcoal text-innrspark-charcoal hover:bg-innrspark-charcoal hover:bg-opacity-10 hover:scale-105 transition-all px-8 py-6 text-lg rounded-full shadow-lg"
           >

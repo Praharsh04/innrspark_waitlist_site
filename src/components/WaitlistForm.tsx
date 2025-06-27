@@ -13,6 +13,7 @@ const WaitlistFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
   phone: z.string().min(10, { message: "Phone number must be at least 10 digits." }),
   company: z.string().optional(),
+  profession: z.string().optional(),
 });
 
 interface WaitlistFormProps {
@@ -27,6 +28,7 @@ export function WaitlistForm({ onClose }: WaitlistFormProps) {
       email: "",
       phone: "",
       company: "",
+      profession: "",
     },
   });
 
@@ -101,6 +103,19 @@ export function WaitlistForm({ onClose }: WaitlistFormProps) {
                   <FormLabel>Company (Optional)</FormLabel>
                   <FormControl>
                     <Input placeholder="Your Company" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="profession"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>What do you do? (Optional)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your Profession" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

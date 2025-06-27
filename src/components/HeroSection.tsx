@@ -64,17 +64,6 @@ export const HeroSection = () => {
         </div>
 
         {showForm && <WaitlistForm onClose={() => setShowForm(false)} />}
-        
-        <div className="absolute bottom-10 left-0 right-0 flex justify-center animate-bounce">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full text-innrspark-charcoal hover:bg-innrspark-charcoal hover:bg-opacity-10"
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            <ArrowDown />
-          </Button>
-        </div>
       </div>
 
       {/* Simplified ad strip */}

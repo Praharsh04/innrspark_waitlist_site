@@ -4,6 +4,7 @@ export interface WaitlistFormData {
   email: string;
   phone: string;
   company?: string;
+  profession?: string;
 }
 
 const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScOJE_hC1rdDHMHM7GxA1y3_XWiqBRcLfMzHRoY784DS5bdqQ/formResponse';
@@ -13,6 +14,7 @@ const GOOGLE_FORM_ENTRIES = {
   email: 'entry.2042276850',
   phone: 'entry.459525914',
   company: 'entry.868494292',
+  profession: 'entry.1233217235',
 };
 
 export const submitToGoogleForm = async (data: WaitlistFormData): Promise<void> => {
@@ -22,6 +24,9 @@ export const submitToGoogleForm = async (data: WaitlistFormData): Promise<void> 
   formData.append(GOOGLE_FORM_ENTRIES.phone, data.phone);
   if (data.company) {
     formData.append(GOOGLE_FORM_ENTRIES.company, data.company);
+  }
+  if (data.profession) {
+    formData.append(GOOGLE_FORM_ENTRIES.profession, data.profession);
   }
 
   try {

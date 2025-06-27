@@ -2,10 +2,12 @@
 import { useState, useEffect } from "react";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ShareModal } from "./ShareModal";
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +51,14 @@ export const Navigation = () => {
               How It Works
               <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-innrspark-yellow group-hover:w-full transition-all duration-300"></span>
             </a>
-            <a href="#share" className={`${isScrolled ? 'text-white' : 'text-innrspark-charcoal'} hover:text-innrspark-yellow transition-colors relative group`}>
+            <a 
+              href="#" 
+              className={`${isScrolled ? 'text-white' : 'text-innrspark-charcoal'} hover:text-innrspark-yellow transition-colors relative group`}
+              onClick={(e) => {
+                e.preventDefault();
+                setShowShareModal(true);
+              }}
+            >
               Share
               <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-innrspark-yellow group-hover:w-full transition-all duration-300"></span>
             </a>
@@ -91,9 +100,13 @@ export const Navigation = () => {
                 How It Works
               </a>
               <a 
-                href="#share" 
+                href="#" 
                 className="text-white hover:text-innrspark-yellow transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowShareModal(true);
+                  setIsMenuOpen(false);
+                }}
               >
                 Share
               </a>
@@ -110,6 +123,7 @@ export const Navigation = () => {
           </div>
         )}
       </div>
+      <ShareModal isOpen={showShareModal} onClose={() => setShowShareModal(false)} />
     </nav>
   );
 };

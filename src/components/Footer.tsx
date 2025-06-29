@@ -69,6 +69,16 @@ export const Footer = () => {
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-2">
               <li>
+                <a href="mailto:help@innrspark.com" className="text-gray-300 hover:text-innrspark-yellow transition-colors">
+                  help@innrspark.com
+                </a>
+              </li>
+              <li>
+                <a href="mailto:info@innrspark.com" className="text-gray-300 hover:text-innrspark-yellow transition-colors">
+                  info@innrspark.com
+                </a>
+              </li>
+              <li>
                 <a href="mailto:innrspark@gmail.com" className="text-gray-300 hover:text-innrspark-yellow transition-colors">
                   innrspark@gmail.com
                 </a>

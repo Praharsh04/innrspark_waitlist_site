@@ -22,6 +22,8 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       external: [
+        'firebase/app',
+        'firebase/analytics',
         // Externalize Node.js built-in modules that might be incorrectly imported by dependencies
         'fs',
         'path',

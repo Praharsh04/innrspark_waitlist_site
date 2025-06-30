@@ -19,10 +19,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 let analytics;
 if (import.meta.env.PROD) {
-  let analytics;
-if (import.meta.env.PROD) {
   analytics = getAnalytics(app);
-}
 }
 
 export default app;

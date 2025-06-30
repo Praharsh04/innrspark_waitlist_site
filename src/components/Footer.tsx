@@ -1,5 +1,5 @@
 
-import { Instagram, Linkedin, Twitter } from "lucide-react";
+import { Instagram, Linkedin, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Footer = () => {
@@ -47,7 +47,7 @@ export const Footer = () => {
                 asChild
               >
                 <a href="https://x.com/innrspark" target="_blank" rel="noopener noreferrer">
-                  <Twitter size={20} />
+                  <X size={20} />
                 </a>
               </Button>
             </div>
@@ -78,11 +78,7 @@ export const Footer = () => {
                   info@innrspark.com
                 </a>
               </li>
-              <li>
-                <a href="mailto:innrspark@gmail.com" className="text-gray-300 hover:text-innrspark-yellow transition-colors">
-                  innrspark@gmail.com
-                </a>
-              </li>
+              
               <li>
                 <a href="tel:9307201876" className="text-gray-300 hover:text-innrspark-yellow transition-colors">
                   9307201876

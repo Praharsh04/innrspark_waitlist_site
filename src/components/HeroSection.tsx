@@ -4,6 +4,9 @@ import { WaitlistForm } from "./WaitlistForm";
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 
+import { getAnalytics, logEvent } from "firebase/analytics";
+import app from "../firebase";
+
 export const HeroSection = () => {
   const [showForm, setShowForm] = useState(false);
   const [isPulsing, setIsPulsing] = useState(false);
@@ -18,6 +21,13 @@ export const HeroSection = () => {
       clearTimeout(timer);
     };
   }, []);
+
+  const handleJoinWaitlistClick = () => {
+    setShowForm(true);
+    if (import.meta.env.PROD) {
+      logEvent(getAnalytics(app), 'join_waitlist_click');
+    }
+  };
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden bg-white text-innrspark-charcoal">
@@ -46,9 +56,7 @@ export const HeroSection = () => {
 
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
           <Button 
-            onClick={() => {
-              setShowForm(true);
-            }} 
+            onClick={handleJoinWaitlistClick} 
             className={`bg-innrspark-yellow hover:bg-opacity-90 hover:scale-105 hover:shadow-[0_0_15px_rgba(255,214,0,0.5)] transition-all text-innrspark-charcoal px-8 py-6 text-lg rounded-full shadow-lg ${
               isPulsing ? 'animate-pulse' : ''
             }`}

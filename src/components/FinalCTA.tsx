@@ -3,8 +3,18 @@ import { useState } from "react";
 import { WaitlistForm } from "./WaitlistForm";
 import { Button } from "@/components/ui/button";
 
+import { getAnalytics, logEvent } from "firebase/analytics";
+import app from "../firebase";
+
 export const FinalCTA = () => {
   const [showForm, setShowForm] = useState(false);
+
+  const handleJoinWaitlistClick = () => {
+    setShowForm(true);
+    if (import.meta.env.PROD) {
+      logEvent(getAnalytics(app), 'join_waitlist_click');
+    }
+  };
 
   return (
     <section className="py-20 bg-innrspark-yellow" id="join">
@@ -17,7 +27,7 @@ export const FinalCTA = () => {
             Limited spots for our first cohort—secure yours now.
           </p>
           <Button 
-            onClick={() => setShowForm(true)} 
+            onClick={handleJoinWaitlistClick} 
             className="bg-innrspark-charcoal text-white hover:bg-opacity-90 hover:scale-105 hover:shadow-[0_0_15px_rgba(28,28,28,0.5)] transition-all px-8 py-6 text-lg rounded-full shadow-lg"
           >
             Join the Waitlist

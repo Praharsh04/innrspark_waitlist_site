@@ -48,7 +48,7 @@ export const Footer = () => {
               >
                 <a href="https://x.com/innrspark" target="_blank" rel="noopener noreferrer">
                   <img src="/lovable-uploads/X_logo_2023_(white).png" alt="X icon white" className="w-5 h-5 group-hover:hidden" />
-                  <img src="/public/icons8-x-50.png" alt="X icon black" className="w-5 h-5 hidden group-hover:block" />
+                  <img src="/icons8-x-50.png" alt="X icon black" className="w-5 h-5 hidden group-hover:block" />
                 </a>
               </Button>
             </div>

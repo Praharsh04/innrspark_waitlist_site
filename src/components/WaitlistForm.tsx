@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { submitToGoogleForm, WaitlistFormData } from "@/lib/google-form-api";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { getAnalytics, logEvent } from "firebase/analytics";
+import app from "../firebase";
 
 const WaitlistFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -38,6 +40,9 @@ export function WaitlistForm({ onClose }: WaitlistFormProps) {
     try {
       await submitToGoogleForm(data as WaitlistFormData);
       toast.success("You've been added to the waitlist!");
+      if (import.meta.env.PROD) {
+        logEvent(getAnalytics(app), 'email_submit');
+      }
       form.reset();
       onClose();
     } catch (error) {

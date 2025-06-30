@@ -1,5 +1,5 @@
 
-import { Instagram, Linkedin, X } from "lucide-react";
+import { Instagram, Linkedin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Footer = () => {
@@ -47,7 +47,7 @@ export const Footer = () => {
                 asChild
               >
                 <a href="https://x.com/innrspark" target="_blank" rel="noopener noreferrer">
-                  <img src="/lovable-uploads/x-logo-negative.png" alt="X Logo" className="h-5 w-5" />
+                  <Twitter size={20} />
                 </a>
               </Button>
             </div>

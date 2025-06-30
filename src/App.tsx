@@ -9,6 +9,7 @@ import app from "./firebase";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import React from "react";
+import { useScrollDepth } from "./hooks/use-scroll-depth";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const TrackPageView = () => {
 };
 
 const App = () => {
+  useScrollDepth();
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

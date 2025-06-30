@@ -28,6 +28,7 @@ export const FinalCTA = () => {
           </p>
           <Button 
             onClick={handleJoinWaitlistClick} 
+            onMouseEnter={() => import.meta.env.PROD && logEvent(getAnalytics(app), 'cta_hover', { cta_name: 'join_waitlist_final_cta' })}
             className="bg-innrspark-charcoal text-white hover:bg-opacity-90 hover:scale-105 hover:shadow-[0_0_15px_rgba(28,28,28,0.5)] transition-all px-8 py-6 text-lg rounded-full shadow-lg"
           >
             Join the Waitlist

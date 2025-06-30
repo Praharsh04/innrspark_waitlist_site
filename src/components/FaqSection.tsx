@@ -5,6 +5,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { getAnalytics, logEvent } from "firebase/analytics";
+import app from "../firebase";
 
 export const FaqSection = () => {
   const faqs = [
@@ -40,7 +42,14 @@ export const FaqSection = () => {
           <div className="w-20 h-1 bg-innrspark-yellow mx-auto mb-8"></div>
         </div>
 
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" collapsible className="w-full" onValueChange={(value) => {
+          if (import.meta.env.PROD && value) {
+            const openedFaq = faqs.find((_, index) => `item-${index}` === value);
+            if (openedFaq) {
+              logEvent(getAnalytics(app), 'faq_opened', { question: openedFaq.question });
+            }
+          }
+        }}>
           {faqs.map((faq, index) => (
             <AccordionItem key={index} value={`item-${index}`}>
               <AccordionTrigger className="text-lg font-medium text-innrspark-charcoal">

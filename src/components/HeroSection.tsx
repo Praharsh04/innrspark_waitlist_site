@@ -57,6 +57,7 @@ export const HeroSection = () => {
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
           <Button 
             onClick={handleJoinWaitlistClick} 
+            onMouseEnter={() => import.meta.env.PROD && logEvent(getAnalytics(app), 'cta_hover', { cta_name: 'join_waitlist_hero' })}
             className={`bg-innrspark-yellow hover:bg-opacity-90 hover:scale-105 hover:shadow-[0_0_15px_rgba(255,214,0,0.5)] transition-all text-innrspark-charcoal px-8 py-6 text-lg rounded-full shadow-lg ${
               isPulsing ? 'animate-pulse' : ''
             }`}

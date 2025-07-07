@@ -17,7 +17,7 @@ export const Footer = () => {
               <span className="text-2xl font-bold">Innrspark</span>
             </div>
             <p className="text-gray-300 mb-4">
-              Helping young minds discover their unique spark through AI-powered psychometric testing and mentorship.
+              We exist to guide every willing soul toward clarity, purpose, and unstoppable growth.
             </p>
             <div className="flex space-x-3">
               <Button 

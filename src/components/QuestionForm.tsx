@@ -45,7 +45,7 @@ export const QuestionForm = () => {
   return (
     <div className="mt-16 p-8 bg-gray-50 rounded-lg shadow-md">
       <h3 className="text-2xl font-bold text-center mb-6 text-innrspark-charcoal">
-        Got a question about Innrspark?
+        Got questions, doubts, or ideas?
       </h3>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Textarea

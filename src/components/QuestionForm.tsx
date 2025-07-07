@@ -23,7 +23,7 @@ export const QuestionForm = () => {
     if (!email) { // Check if email is available from localStorage
       toast({
         title: "Error",
-        description: "Please join the waitlist first so we can link your question to your email.",
+        description: "Just join the waitlist to continue.",
         variant: "destructive",
       });
       return;

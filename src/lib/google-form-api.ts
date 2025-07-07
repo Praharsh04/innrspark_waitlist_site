@@ -46,8 +46,8 @@ export const submitToGoogleForm = async (data: WaitlistFormData): Promise<void> 
 
 export const submitQuestionToGoogleForm = async (question: string, email: string): Promise<void> => {
   const formData = new FormData();
-  formData.append(GOOGLE_FORM_ENTRIES.question, question);
-  formData.append(GOOGLE_FORM_ENTRIES.questionEmail, email);
+  formData.append(GOOGLE_FORM_ENTRIES.question, String(question));
+  formData.append(GOOGLE_FORM_ENTRIES.questionEmail, String(email));
 
   // Log FormData content for debugging
   for (let pair of formData.entries()) {

@@ -16,7 +16,7 @@ const GOOGLE_FORM_ENTRIES = {
   phone: 'entry.459525914',
   company: 'entry.868494292',
   profession: 'entry.1233217235',
-  question: 'entry.2042276850', // This is the entry ID for the question
+  question: 'entry.393190576', // This is the entry ID for the question
 };
 
 export const submitToGoogleForm = async (data: WaitlistFormData): Promise<void> => {

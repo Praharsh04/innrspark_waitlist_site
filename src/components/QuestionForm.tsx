@@ -6,6 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 export const QuestionForm = () => {
   const [question, setQuestion] = useState('');
+  const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
@@ -20,12 +21,21 @@ export const QuestionForm = () => {
       });
       return;
     }
+    if (!email.trim() || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      toast({
+        title: "Error",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setIsSubmitting(true);
     try {
-      await submitQuestionToGoogleForm(question);
+      await submitQuestionToGoogleForm(question, email);
       setSubmitted(true);
       setQuestion(''); // Clear the textarea
+      setEmail(''); // Clear the email input
       toast({
         title: "Success!",
         description: "Thanks for reaching out! We’ll get back to you soon.",
@@ -48,6 +58,14 @@ export const QuestionForm = () => {
         Got questions, doubts, or ideas?
       </h3>
       <form onSubmit={handleSubmit} className="space-y-4">
+        <Input
+          type="email"
+          placeholder="Your Email" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-md focus:ring-innrspark-yellow focus:border-innrspark-yellow transition-all"
+          disabled={isSubmitting || submitted}
+        />
         <Textarea
           placeholder="Type your question here..."
           value={question}

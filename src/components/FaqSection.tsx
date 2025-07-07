@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import app from "../firebase";
+import { QuestionForm } from "./QuestionForm";
 
 export const FaqSection = () => {
   const faqs = [
@@ -61,6 +62,8 @@ export const FaqSection = () => {
             </AccordionItem>
           ))}
         </Accordion>
+
+        <QuestionForm />
       </div>
     </section>
   );

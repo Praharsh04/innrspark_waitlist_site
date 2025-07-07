@@ -61,7 +61,7 @@ export const QuestionForm = () => {
           className="w-full bg-innrspark-yellow text-innrspark-charcoal hover:bg-innrspark-yellow/90 rounded-md py-3 text-lg font-semibold transition-all"
           disabled={isSubmitting || submitted}
         >
-          {isSubmitting ? 'Submitting...' : submitted ? 'Submitted!' : 'Submit Question'}
+          {isSubmitting ? 'Submitting...' : submitted ? 'Submitted!' : 'Submit'}
         </Button>
       </form>
     </div>

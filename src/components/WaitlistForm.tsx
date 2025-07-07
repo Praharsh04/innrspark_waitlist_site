@@ -39,6 +39,7 @@ export function WaitlistForm({ onClose }: WaitlistFormProps) {
   async function onSubmit(data: z.infer<typeof WaitlistFormSchema>) {
     try {
       await submitToGoogleForm(data as WaitlistFormData);
+      localStorage.setItem('userEmail', data.email); // Save email to localStorage
       toast.success("You've been added to the waitlist!");
       if (import.meta.env.PROD) {
         logEvent(getAnalytics(app), 'email_submit');

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { submitQuestionToGoogleForm } from "@/lib/google-form-api";
 import { useToast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
 
 export const QuestionForm = () => {
   const [question, setQuestion] = useState('');
@@ -10,6 +11,13 @@ export const QuestionForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('userEmail');
+    if (storedEmail) {
+      setEmail(storedEmail);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +44,7 @@ export const QuestionForm = () => {
       setSubmitted(true);
       setQuestion(''); // Clear the textarea
       setEmail(''); // Clear the email input
+      localStorage.removeItem('userEmail'); // Clear email from localStorage after submission
       toast({
         title: "Success!",
         description: "Thanks for reaching out! We’ll get back to you soon.",

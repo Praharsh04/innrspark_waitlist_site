@@ -65,11 +65,6 @@ export const QuestionForm = () => {
         Got questions, doubts, or ideas?
       </h3>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {!email && (
-          <p className="text-red-500 text-sm text-center">
-            Please join the waitlist first to submit a question. Your email will be automatically included.
-          </p>
-        )}
         <Textarea
           placeholder="Type your question here..."
           value={question}

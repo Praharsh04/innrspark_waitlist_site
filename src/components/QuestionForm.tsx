@@ -3,7 +3,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { submitQuestionToGoogleForm } from "@/lib/google-form-api";
 import { useToast } from "@/components/ui/use-toast";
-import { Input } from "@/components/ui/input";
 
 export const QuestionForm = () => {
   const [question, setQuestion] = useState('');
@@ -21,18 +20,18 @@ export const QuestionForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!question.trim()) {
+    if (!email) { // Check if email is available from localStorage
       toast({
         title: "Error",
-        description: "Please enter your question before submitting.",
+        description: "Please join the waitlist first to submit a question.",
         variant: "destructive",
       });
       return;
     }
-    if (!email.trim() || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+    if (!question.trim()) {
       toast({
         title: "Error",
-        description: "Please enter a valid email address.",
+        description: "Please enter your question before submitting.",
         variant: "destructive",
       });
       return;
@@ -43,7 +42,6 @@ export const QuestionForm = () => {
       await submitQuestionToGoogleForm(question, email);
       setSubmitted(true);
       setQuestion(''); // Clear the textarea
-      setEmail(''); // Clear the email input
       localStorage.removeItem('userEmail'); // Clear email from localStorage after submission
       toast({
         title: "Success!",
@@ -67,26 +65,23 @@ export const QuestionForm = () => {
         Got questions, doubts, or ideas?
       </h3>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          type="email"
-          placeholder="Your Email" 
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-md focus:ring-innrspark-yellow focus:border-innrspark-yellow transition-all"
-          disabled={isSubmitting || submitted}
-        />
+        {!email && (
+          <p className="text-red-500 text-sm text-center">
+            Please join the waitlist first to submit a question. Your email will be automatically included.
+          </p>
+        )}
         <Textarea
           placeholder="Type your question here..."
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           rows={5}
           className="w-full p-3 border border-gray-300 rounded-md focus:ring-innrspark-yellow focus:border-innrspark-yellow transition-all"
-          disabled={isSubmitting || submitted}
+          disabled={isSubmitting || submitted || !email} // Disable if no email
         />
         <Button
           type="submit"
           className="w-full bg-innrspark-yellow text-innrspark-charcoal hover:bg-innrspark-yellow/90 rounded-md py-3 text-lg font-semibold transition-all"
-          disabled={isSubmitting || submitted}
+          disabled={isSubmitting || submitted || !email} // Disable if no email
         >
           {isSubmitting ? 'Submitting...' : submitted ? 'Submitted!' : 'Submit'}
         </Button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { submitQuestionToGoogleForm } from "@/lib/google-form-api";
@@ -6,21 +6,15 @@ import { useToast } from "@/components/ui/use-toast";
 
 export const QuestionForm = () => {
   const [question, setQuestion] = useState('');
-  const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
 
-  useEffect(() => {
-    const storedEmail = localStorage.getItem('userEmail');
-    if (storedEmail) {
-      setEmail(storedEmail);
-    }
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) { // Check if email is available from localStorage
+    const storedEmail = localStorage.getItem('userEmail');
+
+    if (!storedEmail) { // Check if email is available from localStorage dynamically
       toast({
         title: "Error",
         description: "Just join the waitlist to continue.",
@@ -39,7 +33,7 @@ export const QuestionForm = () => {
 
     setIsSubmitting(true);
     try {
-      await submitQuestionToGoogleForm(question, email);
+      await submitQuestionToGoogleForm(question, storedEmail);
       setSubmitted(true);
       setQuestion(''); // Clear the textarea
       localStorage.removeItem('userEmail'); // Clear email from localStorage after submission
@@ -71,12 +65,12 @@ export const QuestionForm = () => {
           onChange={(e) => setQuestion(e.target.value)}
           rows={5}
           className="w-full p-3 border border-gray-300 rounded-md focus:ring-innrspark-yellow focus:border-innrspark-yellow transition-all"
-          disabled={isSubmitting || submitted} // No longer disabled if no email
+          disabled={isSubmitting || submitted}
         />
         <Button
           type="submit"
           className="w-full bg-innrspark-yellow text-innrspark-charcoal hover:bg-innrspark-yellow/90 rounded-md py-3 text-lg font-semibold transition-all"
-          disabled={isSubmitting || submitted} // No longer disabled if no email
+          disabled={isSubmitting || submitted}
         >
           {isSubmitting ? 'Submitting...' : submitted ? 'Submitted!' : 'Submit'}
         </Button>

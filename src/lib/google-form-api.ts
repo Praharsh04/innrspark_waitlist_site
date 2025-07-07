@@ -49,6 +49,11 @@ export const submitQuestionToGoogleForm = async (question: string, email: string
   formData.append(GOOGLE_FORM_ENTRIES.question, question);
   formData.append(GOOGLE_FORM_ENTRIES.questionEmail, email);
 
+  // Log FormData content for debugging
+  for (let pair of formData.entries()) {
+    console.log(pair[0]+ ': ' + pair[1]); 
+  }
+
   try {
     await fetch(GOOGLE_FORM_QUESTION_URL, {
       method: 'POST',

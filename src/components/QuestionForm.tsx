@@ -23,7 +23,7 @@ export const QuestionForm = () => {
     if (!email) { // Check if email is available from localStorage
       toast({
         title: "Error",
-        description: "Please join the waitlist first to submit a question.",
+        description: "Please join the waitlist first so we can link your question to your email.",
         variant: "destructive",
       });
       return;
@@ -71,12 +71,12 @@ export const QuestionForm = () => {
           onChange={(e) => setQuestion(e.target.value)}
           rows={5}
           className="w-full p-3 border border-gray-300 rounded-md focus:ring-innrspark-yellow focus:border-innrspark-yellow transition-all"
-          disabled={isSubmitting || submitted || !email} // Disable if no email
+          disabled={isSubmitting || submitted} // No longer disabled if no email
         />
         <Button
           type="submit"
           className="w-full bg-innrspark-yellow text-innrspark-charcoal hover:bg-innrspark-yellow/90 rounded-md py-3 text-lg font-semibold transition-all"
-          disabled={isSubmitting || submitted || !email} // Disable if no email
+          disabled={isSubmitting || submitted} // No longer disabled if no email
         >
           {isSubmitting ? 'Submitting...' : submitted ? 'Submitted!' : 'Submit'}
         </Button>

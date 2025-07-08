@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.security import SecurityHeaders
 
 from app.api.v1.api import api_router
 from app.core.config import settings
@@ -18,5 +19,8 @@ if settings.FRONTEND_ORIGINS:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+# Security Headers
+app.add_middleware(SecurityHeaders())
 
 app.include_router(api_router, prefix=settings.API_V1_STR)

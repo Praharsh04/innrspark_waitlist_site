@@ -127,6 +127,30 @@ export function WaitlistForm({ onClose }: WaitlistFormProps) {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="referralSource"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Where did you hear about us?</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select an option" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Social Media">Social Media</SelectItem>
+                      <SelectItem value="Friend or colleague">Friend or colleague</SelectItem>
+                      <SelectItem value="Event">Event</SelectItem>
+                      <SelectItem value="Blog or article">Blog or article</SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <DialogFooter>
               <Button type="submit" disabled={formState.isSubmitting} className="w-full">
                 {formState.isSubmitting ? "Submitting..." : "Join Waitlist"}

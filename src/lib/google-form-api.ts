@@ -5,6 +5,7 @@ export interface WaitlistFormData {
   phone: string;
   company?: string;
   profession?: string;
+  referralSource: string;
 }
 
 const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScOJE_hC1rdDHMHM7GxA1y3_XWiqBRcLfMzHRoY784DS5bdqQ/formResponse';
@@ -16,6 +17,7 @@ const GOOGLE_FORM_ENTRIES = {
   phone: 'entry.459525914',
   company: 'entry.868494292',
   profession: 'entry.1233217235',
+  referralSource: 'entry.769593128',
   question: 'entry.1815729306', // New entry ID for question
   questionEmail: 'entry.603371342', // New entry ID for email in question form
 };
@@ -25,6 +27,7 @@ export const submitToGoogleForm = async (data: WaitlistFormData): Promise<void> 
   formData.append(GOOGLE_FORM_ENTRIES.name, data.name);
   formData.append(GOOGLE_FORM_ENTRIES.email, data.email);
   formData.append(GOOGLE_FORM_ENTRIES.phone, data.phone);
+  formData.append(GOOGLE_FORM_ENTRIES.referralSource, data.referralSource);
   if (data.company) {
     formData.append(GOOGLE_FORM_ENTRIES.company, data.company);
   }

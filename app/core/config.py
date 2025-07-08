@@ -17,6 +17,6 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     # Frontend origins for CORS. Comma-separated string in .env
-    FRONTEND_ORIGINS: str = "" # e.g., "http://localhost:3000,https://yourdomain.com"
+    FRONTEND_ORIGINS: str = "http://localhost:8080,http://localhost:3000" # e.g., "http://localhost:3000,https://yourdomain.com"
 
 settings = Settings()

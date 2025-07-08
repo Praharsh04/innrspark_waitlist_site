@@ -4,6 +4,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { submitToGoogleForm, WaitlistFormData } from "@/lib/google-form-api";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
@@ -16,6 +17,7 @@ const WaitlistFormSchema = z.object({
   phone: z.string().min(10, { message: "Phone number must be at least 10 digits." }),
   company: z.string().optional(),
   profession: z.string().optional(),
+  referralSource: z.string({ required_error: "Please select an option." }),
 });
 
 interface WaitlistFormProps {
@@ -31,6 +33,7 @@ export function WaitlistForm({ onClose }: WaitlistFormProps) {
       phone: "",
       company: "",
       profession: "",
+      referralSource: "",
     },
   });
 

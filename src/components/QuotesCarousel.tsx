@@ -11,9 +11,9 @@ interface QuoteItem {
 
 export const QuotesCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState<'right' | 'left'>('right');
-  const [isAnimating, setIsAnimating] = useState(false);
-  
+  const [isAnimating, setIsAnimating] = useState(false); // This is for the *exit* animation of the previous quote
+  const [slideIn, setSlideIn] = useState(false); // New state for entry animation
+
   const quotes: QuoteItem[] = [
     {
       text: "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do.",
@@ -99,43 +99,47 @@ export const QuotesCarousel = () => {
     return () => clearInterval(interval); // Cleanup on unmount
   }, [quotes.length]);
 
+  // Effect to trigger slide-in animation when currentIndex changes
+  useEffect(() => {
+    setSlideIn(false); // Reset for re-triggering animation
+    const timer = setTimeout(() => {
+      setSlideIn(true); // Trigger slide-in
+    }, 50); // Small delay to ensure class is applied before transition
+    return () => clearTimeout(timer);
+  }, [currentIndex]);
+
+
   const nextQuote = useCallback(() => {
     if (isAnimating) return;
-    
-    setDirection('right');
-    setIsAnimating(true);
-    
-    // Small delay to let exit animation complete
+
+    setIsAnimating(true); // Start exit animation for current quote
+
     setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % quotes.length);
-      setIsAnimating(false);
-    }, 400);
+      setIsAnimating(false); // End exit animation
+    }, 400); // Duration of exit animation
   }, [isAnimating, quotes.length]);
 
   const prevQuote = useCallback(() => {
     if (isAnimating) return;
-    
-    setDirection('left');
-    setIsAnimating(true);
-    
-    // Small delay to let exit animation complete
+
+    setIsAnimating(true); // Start exit animation for current quote
+
     setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex - 1 + quotes.length) % quotes.length);
-      setIsAnimating(false);
-    }, 400);
+      setIsAnimating(false); // End exit animation
+    }, 400); // Duration of exit animation
   }, [isAnimating, quotes.length]);
 
   const goToQuote = useCallback((index: number) => {
     if (isAnimating || index === currentIndex) return;
-    
-    const newDirection = index > currentIndex ? 'right' : 'left';
-    setDirection(newDirection);
-    setIsAnimating(true);
-    
+
+    setIsAnimating(true); // Start exit animation for current quote
+
     setTimeout(() => {
       setCurrentIndex(index);
-      setIsAnimating(false);
-    }, 400);
+      setIsAnimating(false); // End exit animation
+    }, 400); // Duration of exit animation
   }, [currentIndex, isAnimating]);
 
   return (
@@ -155,13 +159,10 @@ export const QuotesCarousel = () => {
         {/* Quote content with transition */}
         <div className="overflow-hidden relative h-[180px] md:h-[150px] w-full">
           <div
+            key={currentIndex} // Add key to force re-render and re-trigger animation
             className={cn(
-              "absolute w-full transition-all duration-400 ease-in-out",
-              isAnimating ? 
-                direction === 'right' ? 
-                  'translate-x-[-100%] opacity-0' : 
-                  'translate-x-[100%] opacity-0' : 
-                'translate-x-0 opacity-100'
+              "absolute w-full transition-all duration-700 ease-out", // Increased duration for smoother effect
+              slideIn ? "translate-x-0 opacity-100" : "translate-x-[-100%] opacity-0"
             )}
           >
             <p className="text-lg md:text-xl font-medium text-innrspark-charcoal mb-4 italic">

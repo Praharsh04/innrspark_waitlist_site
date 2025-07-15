@@ -1,0 +1,1 @@
+fix: Ensure Starlette 0.40.0 compatibility and resolve dependencies
